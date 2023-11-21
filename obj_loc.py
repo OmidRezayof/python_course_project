@@ -35,7 +35,6 @@ def pos_process():
     global obj_loc, goal_loc, LTS_pointing,obj_pointing
     object_vel = 0.5  # a number between 0-1
 
-    print(LTS_pointing)
     if(LTS_pointing==[0,0]):
         if(((obj_loc[0] - goal_loc[0])**2+(obj_loc[1] - goal_loc[1])**2)**0.5<5):
             print ("sufficiently close")
