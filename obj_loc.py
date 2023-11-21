@@ -9,6 +9,7 @@ obj_loc = [0, 10]
 goal_loc = [0, 200]
 LTS_pointing = [0, 0]
 obj_pointing=[0,0]
+spot_loc=[0,0]
 
 
 
@@ -16,6 +17,13 @@ def goal_update(data):
 
     goal_loc[0]=data.x
     goal_loc[1]=data.y
+
+    return
+
+def spot_loc_update(data):
+
+    spot_loc[0]=data.x
+    spot_loc[1]=data.y
 
     return
 
@@ -27,13 +35,13 @@ def pos_process():
     global obj_loc, goal_loc, LTS_pointing,obj_pointing
     object_vel = 0.5  # a number between 0-1
 
-    
+    print(LTS_pointing)
     if(LTS_pointing==[0,0]):
-        obj_pointing[0]=(goal_loc[0]-obj_loc[0])
-        obj_pointing[1]=(goal_loc[1]-obj_loc[1])
-        if (obj_pointing==[0,0]):
-            print("on")
+        if(((obj_loc[0] - goal_loc[0])**2+(obj_loc[1] - goal_loc[1])**2)**0.5<5):
+            print ("sufficiently close")
             return
+        obj_pointing[0]=(obj_loc[0]-spot_loc[0])
+        obj_pointing[1]=(obj_loc[1]-spot_loc[1])
         temp = (obj_pointing[0]**2+obj_pointing[1]**2)**0.5
         obj_pointing[0]=obj_pointing[0]/temp
         obj_pointing[1]=obj_pointing[1]/temp
@@ -76,6 +84,7 @@ if __name__ == '__main__':
     pub = rospy.Publisher('obj_loc_topic', Point, queue_size=10)
     rospy.Subscriber("joy", Joy, position)
     rospy.Subscriber("goal_loc_topic",Point, goal_update)
+    rospy.Subscriber("spot_loc_topic",Point, spot_loc_update)
     
     while not rospy.is_shutdown():
         pos_process()
