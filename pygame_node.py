@@ -9,8 +9,8 @@ pygame.init()
 
 
 num_of_sheeps=0
-goal_vel=0
-obj_vel=0
+goal_vel=1
+obj_vel=1
 
 
 # Pygame window dimensions
