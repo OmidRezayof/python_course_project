@@ -7,6 +7,12 @@ import sys
 # Initialize Pygame
 pygame.init()
 
+
+num_of_sheeps=0
+goal_vel=0
+obj_vel=0
+
+
 # Pygame window dimensions
 WINDOW_WIDTH = 600
 WINDOW_HEIGHT = 400
