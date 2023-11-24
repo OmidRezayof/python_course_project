@@ -5,7 +5,7 @@ import copy
 from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Point
 
-obj_loc = [0, 10]
+obj_loc = [0, 20]
 goal_loc = [0, 200]
 LTS_pointing = [0, 0]
 obj_pointing=[0,0]
