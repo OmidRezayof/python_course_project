@@ -7,11 +7,17 @@ Group: G11 / members: Juliana Iverson, Austin Uresti, Omid Rezayof
 
 The structure of the project will come in later lines:
 ROSCORE - Central Communication Hub
+
 nodes:
+
   obj_loc_node
+
   spot_loc_node
+  
   goal_loc_node
+  
   joy_node
+  
   pygame_node
 
 ## How To Run
