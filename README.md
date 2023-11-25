@@ -8,6 +8,7 @@ Group: G11 / members: Juliana Iverson, Austin Uresti, Omid Rezayof
 
 
 The structure of the project will come in later lines:
+
 ROSCORE - Central Communication Hub
 
 nodes:
