@@ -2,17 +2,18 @@
 import math
 import rospy
 from sensor_msgs.msg import LaserScan
+from geometry_msg.msg import Point
 
-def callback:
+def locations(msg):
     #whatever
     #msg.ranges is the ranges array
     dists = msg.ranges
-    depth = 5 #arbitrary value, need to find the depth of the husky based on range readings
+    depth = 5 #arbitrary value, may need to find the depth of the husky based on range readings
     min_ang = msg.angle_min
     ang_inc = msg.angle_inc
     
     for i in range(len(dists)):
-        if dists[i] == inf:
+        if dists[i] == 'inf':
             dists[i] = 0 
     #need to get rid of the inf values to be able to process data
     
@@ -39,9 +40,18 @@ def callback:
     goal_loc = [x_s,y_s]
     #goal_loc should have the average of the 2 furthest distance readings
 
+if __name__ == '__main__':
+    rospy.init_node('scan_values')
+
+    rate = rospy.Rate(5)  # ROS Rate at 5Hz
+    sub = rospy.Subscriber('/kobuki/laser/scan',LaserScan, locations)
+    pub = rospy.Publisher('goal_loc_topic', Point, queue_size=10)
+    pub = rospy.Publisher('obj_loc_topic', Point, queue_size=10)
+    #don't want to mess up his algorithm and don't know how to use the global variables to do this publishing
     
-rospy.init_node('scan_values')
-sub = rospy.Subscriber(#example is /kobuki/laser/scan', LaserScan, callback)
+    while not rospy.is_shutdown():
+        rate.sleep()
+
 #find the ros node and package with:
 #rostopic list
 #find the laser/scan topic
@@ -51,8 +61,6 @@ sub = rospy.Subscriber(#example is /kobuki/laser/scan', LaserScan, callback)
 #rosmsg show <sensor_msgs/LaserScan>
 #we want to use the ranges array and the min and max angle and angle increment
 #ranges contains the values for the different beams in the laser
-
-rospy.spin()
 
 #launch file
 # <launch>
