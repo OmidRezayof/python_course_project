@@ -11,7 +11,8 @@ def locations(msg):
     depth = 5 #arbitrary value, may need to find the depth of the husky based on range readings
     min_ang = msg.angle_min
     ang_inc = msg.angle_inc
-    
+    publishing_msg = Point()
+
     for i in range(len(dists)):
         if dists[i] == 'inf':
             dists[i] = 0 
@@ -38,6 +39,12 @@ def locations(msg):
     x_s = (goal[0][0]+goal[1][0])/2
     y_s = (goal[0][1]+goal[1][1])/2
     goal_loc = [x_s,y_s]
+    publishing_msg.x=obj_x
+    publishing_msg.y=obj_y
+    publishing_msg.z = 0
+    if not rospy.is_shutdown():
+        pub.publish(publishing_msg)
+
     #goal_loc should have the average of the 2 furthest distance readings
 
 if __name__ == '__main__':
@@ -45,8 +52,7 @@ if __name__ == '__main__':
 
     rate = rospy.Rate(5)  # ROS Rate at 5Hz
     sub = rospy.Subscriber('/kobuki/laser/scan',LaserScan, locations)
-    #pub = rospy.Publisher('goal_loc_topic', Point, queue_size=10)
-    #pub = rospy.Publisher('obj_loc_topic', Point, queue_size=10)
+    pub = rospy.Publisher('lidar_topic', Point, queue_size=10)
     #don't want to mess up his algorithm and don't know how to use the global variables to do this publishing
     
     while not rospy.is_shutdown():
