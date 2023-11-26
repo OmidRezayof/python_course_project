@@ -2,15 +2,15 @@
 import math
 import rospy
 from sensor_msgs.msg import LaserScan
-#from geometry_msg.msg import Point
+from geometry_msg.msg import Point
 
 def locations(msg):
     #whatever
     #msg.ranges is the ranges array
     dists = msg.ranges
-    depth = 5 #arbitrary value, may need to find the depth of the husky based on range readings
+    # depth = 5 #arbitrary value, may need to find the depth of the husky based on range readings
     min_ang = msg.angle_min
-    ang_inc = msg.angle_inc
+    ang_inc = msg.angle_increment
     publishing_msg = Point()
 
     for i in range(len(dists)):
@@ -25,20 +25,21 @@ def locations(msg):
     obj_y = obj_dist*math.sin(obj_ang)
     obj_loc = [obj_x, obj_y] 
     #obj_loc should have the x, y coordinates of the object with respect to the lidar
-    n = 0 
-    goal = [[0,0,[0,0]]]
-    while n < 2: #going to find 2 max distances to use as goal posts
-        dist = max(dists)
-        ind = dists.index(dist)
-        angle = min_ang + ang_inc*ind
-        x = dist*math.cos(angle)
-        y = dist*math.sin(angle)
-        dists[ind] = 0
-        goal[n] = [x,y]
-        n = n+1
-    x_s = (goal[0][0]+goal[1][0])/2
-    y_s = (goal[0][1]+goal[1][1])/2
-    goal_loc = [x_s,y_s]
+    #may not need goal_loc if we use the joystick to control the goal
+    # n = 0 
+    # goal = [[0,0,[0,0]]]
+    # while n < 2: #going to find 2 max distances to use as goal posts
+    #     dist = max(dists)
+    #     ind = dists.index(dist)
+    #     angle = min_ang + ang_inc*ind
+    #     x = dist*math.cos(angle)
+    #     y = dist*math.sin(angle)
+    #     dists[ind] = 0
+    #     goal[n] = [x,y]
+    #     n = n+1
+    # x_s = (goal[0][0]+goal[1][0])/2
+    # y_s = (goal[0][1]+goal[1][1])/2
+    # goal_loc = [x_s,y_s]
     publishing_msg.x=obj_x
     publishing_msg.y=obj_y
     publishing_msg.z = 0
@@ -51,7 +52,7 @@ if __name__ == '__main__':
     rospy.init_node('scan_values')
 
     rate = rospy.Rate(5)  # ROS Rate at 5Hz
-    sub = rospy.Subscriber('/front/scan',LaserScan, locations)
+    sub = rospy.Subscriber('/kobuki/laser/scan',LaserScan, locations)
     pub = rospy.Publisher('lidar_topic', Point, queue_size=10)
     #don't want to mess up his algorithm and don't know how to use the global variables to do this publishing
     
