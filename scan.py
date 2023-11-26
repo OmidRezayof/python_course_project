@@ -2,7 +2,7 @@
 import math
 import rospy
 from sensor_msgs.msg import LaserScan
-from geometry_msg.msg import Point
+#from geometry_msg.msg import Point
 
 def locations(msg):
     #whatever
@@ -45,8 +45,8 @@ if __name__ == '__main__':
 
     rate = rospy.Rate(5)  # ROS Rate at 5Hz
     sub = rospy.Subscriber('/kobuki/laser/scan',LaserScan, locations)
-    pub = rospy.Publisher('goal_loc_topic', Point, queue_size=10)
-    pub = rospy.Publisher('obj_loc_topic', Point, queue_size=10)
+    #pub = rospy.Publisher('goal_loc_topic', Point, queue_size=10)
+    #pub = rospy.Publisher('obj_loc_topic', Point, queue_size=10)
     #don't want to mess up his algorithm and don't know how to use the global variables to do this publishing
     
     while not rospy.is_shutdown():
