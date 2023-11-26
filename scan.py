@@ -51,7 +51,7 @@ if __name__ == '__main__':
     rospy.init_node('scan_values')
 
     rate = rospy.Rate(5)  # ROS Rate at 5Hz
-    sub = rospy.Subscriber('/kobuki/laser/scan',LaserScan, locations)
+    sub = rospy.Subscriber('/front/scan',LaserScan, locations)
     pub = rospy.Publisher('lidar_topic', Point, queue_size=10)
     #don't want to mess up his algorithm and don't know how to use the global variables to do this publishing
     
