@@ -80,35 +80,38 @@ if __name__ == '__main__':
         
         print(called)
         if called==2:
-            x_x = abs(goal_loc[0] - obj_loc[0])
-            x_y = abs(goal_loc[1] - obj_loc[1])
-            x_phi = tan(x_x/x_y)
-            x_l = sqrt(x_x**2 + x_y**2) + 7
+            
+            goal_x = goal_loc[0] - obj_loc[0]
+            goal_y = goal_loc[1] - obj_loc[1]
+            goal_phi = tan(goal_x/goal_y)
+            goal_l = sqrt(goal_x**2 + goal_y**2) + 7
             #print('x_l',x_l)
             #print(x_theta)
 
-            goal = Point()
+            x = Point()
             
-            goal.x = x_l*sin(x_phi)
+            x.x = goal_loc[0] + goal_l*sin(goal_phi)
+            x.y = goal_loc[1] + goal_l*cos(goal_phi)
             #print(goal.x)
             #print(goal.x)
-            goal.y = x_l*cos(x_phi)
+            
             #print(goal.y)
             called=3
          
         elif called == 3:
-            inc_x = goal.x -x
-            print(inc_x)
+            inc_y = x.x -x
+            #print(inc_x)
             #print(inc_x)
         #print(x)
         #print('x', x)
             #print(goal.x)
-            inc_y = goal.y -y
+            inc_x = x.y -y
         #print('y', y)
         #print(inc_y)
-            angle_to_goal = atan2(inc_y, inc_x)
-            print('angle_to_goal', angle_to_goal)
-            print('theta', theta)
+            angle_of_goal = atan2(inc_x, inc_y)
+            #print('angle_to_goal', angle_to_goal)
+            angle_to_goal = 270 + angle_of_goal
+            #print('theta', theta)
         #print(angle_to_goal)
             if inc_x < 0.5 and inc_y < 0.5:
                 speed.linear.x = 0.0
