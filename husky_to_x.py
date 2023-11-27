@@ -19,19 +19,21 @@ y = 0
 theta = 0
 goal_loc=[0,0]
 obj_loc = [0,0]
+called=0
 #need to write another script to get the initial odometry and theta only once then
 #subtract those values from the newOdom updating x and y 
 #x and y need to be the odometry reading - the initial odometry reading when husky is asked to move to x
 def goal_update(msg):
-    global goal_loc
+    global goal_loc,called
     global flag2
     if flag2 == 0:
         goal_loc[0] = msg.x
         print("test")
         goal_loc[1] = msg.y
         flag2 = 1
+        called=called+1
 def obj_update(msg):
-    global obj_loc 
+    global obj_loc ,called
     global flag3
     if flag3 == 0:
             
@@ -39,6 +41,7 @@ def obj_update(msg):
         obj_loc[0] = msg.x
         obj_loc[1] = msg.y
         flag3 = 1
+        called=called+1
 def newOdom(msg):
     global flag, init_x, init_y, init_theta, x, y, theta
     if flag==0:
@@ -69,16 +72,19 @@ if __name__ == '__main__':
 
     r = rospy.Rate(4)
     
-    x_x = goal_loc[0] - obj_loc[0]
-    x_y = goal_loc[1] - obj_loc[1]
-    x_theta = tan(x_x/x_y)
-    x_l = (x_x**2 + x_y**2) + 10
-
-    goal = Point()
-    goal.x = x_l*sin(x_theta)
-    goal.y = x_l*cos(x_theta)
+    
 
     while not rospy.is_shutdown():
+        if(called==2):
+            x_x = goal_loc[0] - obj_loc[0]
+            x_y = goal_loc[1] - obj_loc[1]
+            x_theta = tan(x_x/x_y)
+            x_l = (x_x**2 + x_y**2) + 10
+
+            goal = Point()
+            goal.x = x_l*sin(x_theta)
+            goal.y = x_l*cos(x_theta)
+            called=3
         inc_x = goal.x -x
         inc_y = goal.y -y
         
