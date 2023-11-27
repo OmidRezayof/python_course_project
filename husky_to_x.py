@@ -7,6 +7,7 @@ from math import atan2
 from math import tan
 from math import sin
 from math import cos
+from math import sqrt
 
 flag = 0
 flag2=0
@@ -42,6 +43,7 @@ def obj_update(msg):
         obj_loc[1] = msg.y
         flag3 = 1
         called=called+1
+        #print(called)
 def newOdom(msg):
     global flag, init_x, init_y, init_theta, x, y, theta
     if flag==0:
@@ -75,32 +77,55 @@ if __name__ == '__main__':
     
 
     while not rospy.is_shutdown():
-        if(called==2):
-            x_x = goal_loc[0] - obj_loc[0]
-            x_y = goal_loc[1] - obj_loc[1]
-            x_theta = tan(x_x/x_y)
-            x_l = (x_x**2 + x_y**2) + 10
+        
+        print(called)
+        if called==2:
+            x_x = abs(goal_loc[0] - obj_loc[0])
+            x_y = abs(goal_loc[1] - obj_loc[1])
+            x_phi = tan(x_x/x_y)
+            x_l = sqrt(x_x**2 + x_y**2) + 7
+            #print('x_l',x_l)
+            #print(x_theta)
 
             goal = Point()
-            goal.x = x_l*sin(x_theta)
-            goal.y = x_l*cos(x_theta)
+            
+            goal.x = x_l*sin(x_phi)
+            #print(goal.x)
+            #print(goal.x)
+            goal.y = x_l*cos(x_phi)
+            #print(goal.y)
             called=3
-        inc_x = goal.x -x
-        inc_y = goal.y -y
-        
-        if inc_x < 0.5 and inc_y < 3:
-            speed.linear.x = 0.0
-            speed.angular.z = 0.0
+         
+        elif called == 3:
+            inc_x = goal.x -x
+            print(inc_x)
+            #print(inc_x)
+        #print(x)
+        #print('x', x)
+            #print(goal.x)
+            inc_y = goal.y -y
+        #print('y', y)
+        #print(inc_y)
+            angle_to_goal = atan2(inc_y, inc_x)
+            print('angle_to_goal', angle_to_goal)
+            print('theta', theta)
+        #print(angle_to_goal)
+            if inc_x < 0.5 and inc_y < 0.5:
+                speed.linear.x = 0.0
+                speed.angular.z = 0.0
+                break
 
-        angle_to_goal = atan2(inc_y, inc_x)
+   
+        #print(angle_to_goal)
 
-        if abs(angle_to_goal - theta) > 0.1:
-            speed.linear.x = 0.0
-            speed.angular.z = 0.3
-        else:
-            speed.linear.x = 0.5
-            speed.angular.z = 0.0
+            elif abs(angle_to_goal - theta) > 0.5:
+                speed.linear.x = 0.0
+                speed.angular.z = 1.0
+                print(speed.angular.z)
+            else:
+                speed.linear.x = 1.0
+                speed.angular.z = 0.0
 
         pub.publish(speed)
         r.sleep()   
-    
+   
