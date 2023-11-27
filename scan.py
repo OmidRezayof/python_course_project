@@ -3,6 +3,7 @@ import math
 import rospy
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Point
+from numpy import array,inf
 
 def locations(msg):
     #whatever
@@ -15,8 +16,10 @@ def locations(msg):
     sensor_pubmsg=Point()
 
     for i in range(len(dists)):
-        if dists[i] == 'inf':
+    
+        if dists[i] == inf or dists[i] == -inf:
             dists[i] = 0 
+            
     #need to get rid of the inf values to be able to process data
     
     obj_dist = min(value for value in dists if value != 0)
@@ -28,7 +31,7 @@ def locations(msg):
     #obj_loc should have the x, y coordinates of the object with respect to the lidar
     #may not need goal_loc if we use the joystick to control the goal
     
-    goal_dist = max(value for value in dists if value != inf or value != -inf)
+    goal_dist = max(dists)
     goal_ind = dists.index(goal_dist)
     goal_angle = min_ang + ang_inc*goal_ind
     x_s = goal_dist*math.cos(goal_angle)
@@ -37,7 +40,7 @@ def locations(msg):
     goal_loc = [x_s,y_s]
     publishing_msg.x=obj_x
     publishing_msg.y=obj_y
-    publishing_msg.z = 0
+    publishing_msg.z = obj_dist
     sensor_pubmsg.x=x_s
     sensor_pubmsg.y=y_s
     sensor_pubmsg.z=0
