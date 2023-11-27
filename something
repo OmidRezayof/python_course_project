@@ -8,20 +8,23 @@ def callback(data):
     
 
     
-    	
-        model_state = ModelState()
-        print("test")
-        model = rospy.wait_for_message('gazebo/model_states',ModelStates)
-        model_state.pose=model.pose['our_unit_cylinder']
-        model_state.model_name = "our_unit_cylinder"  # Name of the model in Gazebo
-        model_state.twist.linear.x = data.linear.x
-        model_state.twist.linear.y = data.linear.y
-        model_state.twist.linear.z = data.linear.z
-        model_state.twist.angular.x = data.angular.x
-        model_state.twist.angular.y = data.angular.y
-        model_state.twist.angular.z = data.angular.z
+        
+    model_state = ModelState()
+    print("test")
+    model = rospy.wait_for_message('gazebo/model_states',ModelStates)
+    for i in range(len(model.name)):
+        if(model.name[i]=='our_unit_cylinder'):
+            
+            model_state.pose=model.pose['our_unit_cylinder']
+            model_state.model_name = "our_unit_cylinder"  # Name of the model in Gazebo
+            model_state.twist.linear.x = data.linear.x
+            model_state.twist.linear.y = data.linear.y
+            model_state.twist.linear.z = data.linear.z
+            model_state.twist.angular.x = data.angular.x
+            model_state.twist.angular.y = data.angular.y
+            model_state.twist.angular.z = data.angular.z
 
-        model_publisher.publish(model_state)
+            model_publisher.publish(model_state)
 
 
         
