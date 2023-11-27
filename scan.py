@@ -43,7 +43,7 @@ def locations(msg):
     publishing_msg.z = obj_dist
     sensor_pubmsg.x=x_s
     sensor_pubmsg.y=y_s
-    sensor_pubmsg.z=0
+    sensor_pubmsg.z=((x_s-obj_x)**2+(y_s-obj_y)**2)**0.5
     if not rospy.is_shutdown():
         pub.publish(publishing_msg)
         pub2.publish(sensor_pubmsg)
