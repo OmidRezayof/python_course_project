@@ -2,24 +2,26 @@
 
 import rospy
 from geometry_msgs.msg import Twist
-from gazebo_msgs.msg import ModelState
+from gazebo_msgs.msg import ModelState, ModelStates
 
 def callback(data):
     
-    
+
     
     	
-    model_state = ModelState()
-    print("test")
-    model_state.model_name = "unit_cylinder"  # Name of the model in Gazebo
-    model_state.twist.linear.x = data.linear.x
-    model_state.twist.linear.y = data.linear.y
-    model_state.twist.linear.z = data.linear.z
-    model_state.twist.angular.x = data.angular.x
-    model_state.twist.angular.y = data.angular.y
-    model_state.twist.angular.z = data.angular.z
+        model_state = ModelState()
+        print("test")
+        model = rospy.wait_for_message('gazebo/model_states',ModelStates)
+        model_state.pose=model.pose['our_unit_cylinder']
+        model_state.model_name = "our_unit_cylinder"  # Name of the model in Gazebo
+        model_state.twist.linear.x = data.linear.x
+        model_state.twist.linear.y = data.linear.y
+        model_state.twist.linear.z = data.linear.z
+        model_state.twist.angular.x = data.angular.x
+        model_state.twist.angular.y = data.angular.y
+        model_state.twist.angular.z = data.angular.z
 
-    model_publisher.publish(model_state)
+        model_publisher.publish(model_state)
 
 
         
@@ -32,4 +34,5 @@ if __name__ == '__main__':
     
     
     while not rospy.is_shutdown():
+        
         rate.sleep()
