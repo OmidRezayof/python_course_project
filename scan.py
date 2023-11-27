@@ -7,7 +7,7 @@ from geometry_msgs.msg import Point
 def locations(msg):
     #whatever
     #msg.ranges is the ranges array
-    dists = msg.ranges
+    dists = list(msg.ranges)
     # depth = 5 #arbitrary value, may need to find the depth of the husky based on range readings
     min_ang = msg.angle_min
     ang_inc = msg.angle_increment
