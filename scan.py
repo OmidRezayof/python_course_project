@@ -28,7 +28,7 @@ def locations(msg):
     #obj_loc should have the x, y coordinates of the object with respect to the lidar
     #may not need goal_loc if we use the joystick to control the goal
     
-    goal_dist = max(dists)
+    goal_dist = max(value for value in dists if value != inf or value != -inf)
     goal_ind = dists.index(goal_dist)
     goal_angle = min_ang + ang_inc*goal_ind
     x_s = goal_dist*math.cos(goal_angle)
