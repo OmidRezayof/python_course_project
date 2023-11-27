@@ -1,18 +1,21 @@
 import rospy
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import Twist
 from gazebo_msgs.msg import ModelState
 
 class CylinderControlPlugin:
     def __init__(self):
-        self.subscriber = rospy.Subscriber('/cyl_loc_topic', Point, self.callback)
+        self.subscriber = rospy.Subscriber('/cylinder_velocity', Twist, self.callback)
         self.model_publisher = rospy.Publisher('/gazebo/set_model_state', ModelState, queue_size=1)
 
     def callback(self, data):
         model_state = ModelState()
         model_state.model_name = "cylinder"  # Name of the model in Gazebo
-        model_state.pose.position.x = data.x
-        model_state.pose.position.y = data.y
-        model_state.pose.position.z = data.z
+        model_state.twist.linear.x = data.linear.x
+        model_state.twist.linear.y = data.linear.y
+        model_state.twist.linear.z = data.linear.z
+        model_state.twist.angular.x = data.angular.x
+        model_state.twist.angular.y = data.angular.y
+        model_state.twist.angular.z = data.angular.z
 
         self.model_publisher.publish(model_state)
 
