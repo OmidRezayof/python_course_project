@@ -2,7 +2,7 @@
 import math
 import rospy
 from sensor_msgs.msg import LaserScan
-from geometry_msg.msg import Point
+from geometry_msgs.msg import Point
 
 def locations(msg):
     #whatever
