@@ -23,16 +23,22 @@ obj_loc = [0,0]
 #subtract those values from the newOdom updating x and y 
 #x and y need to be the odometry reading - the initial odometry reading when husky is asked to move to x
 def goal_update(msg):
-
     global goal_loc
-    goal_loc[0] = msg.x
-    print("test")
-    goal_loc[1] = msg.y
+    global flag2
+    if flag2 == 0:
+        goal_loc[0] = msg.x
+        print("test")
+        goal_loc[1] = msg.y
+        flag2 = 1
 def obj_update(msg):
     global obj_loc 
-    print("test2")
-    obj_loc[0] = msg.x
-    obj_loc[1] = msg.y
+    global flag3
+    if flag3 == 0:
+            
+        print("test2")
+        obj_loc[0] = msg.x
+        obj_loc[1] = msg.y
+        flag3 = 1
 def newOdom(msg):
     global flag, init_x, init_y, init_theta, x, y, theta
     if flag==0:
