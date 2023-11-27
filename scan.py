@@ -31,7 +31,7 @@ def locations(msg):
     goal_dist = max(dists)
     goal_ind = dists.index(goal_dist)
     goal_angle = min_ang + ang_inc*goal_ind
-    x_s = goal_dist*math.cos(gaol_angle)
+    x_s = goal_dist*math.cos(goal_angle)
     y_s = goal_dist*math.sin(goal_angle)
 
     goal_loc = [x_s,y_s]
