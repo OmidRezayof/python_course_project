@@ -27,19 +27,13 @@ def locations(msg):
     obj_loc = [obj_x, obj_y] 
     #obj_loc should have the x, y coordinates of the object with respect to the lidar
     #may not need goal_loc if we use the joystick to control the goal
-    n = 0 
-    goal = [[0,0,[0,0]]]
-    while n < 2: #going to find 2 max distances to use as goal posts
-        dist = max(dists)
-        ind = dists.index(dist)
-        angle = min_ang + ang_inc*ind
-        x = dist*math.cos(angle)
-        y = dist*math.sin(angle)
-        dists[ind] = 0
-        goal[n] = [x,y]
-        n = n+1
-    x_s = (goal[0][0]+goal[1][0])/2
-    y_s = (goal[0][1]+goal[1][1])/2
+    
+    goal_dist = max(dists)
+    goal_ind = dists.index(goal_dist)
+    goal_angle = min_ang + ang_inc*goal_ind
+    x_s = goal_dist*math.cos(gaol_angle)
+    y_s = goal_dist*math.sin(goal_angle)
+
     goal_loc = [x_s,y_s]
     publishing_msg.x=obj_x
     publishing_msg.y=obj_y
