@@ -9,23 +9,28 @@ from math import sin
 from math import cos
 
 flag = 0
+flag2=0
+flag3=0
 init_x = 0.0
 init_y = 0.0 
 init_theta = 0.0
 x = 0
 y = 0
 theta = 0
-goal_loc=[]
-obj_loc = []
+goal_loc=[0,0]
+obj_loc = [0,0]
 #need to write another script to get the initial odometry and theta only once then
 #subtract those values from the newOdom updating x and y 
 #x and y need to be the odometry reading - the initial odometry reading when husky is asked to move to x
 def goal_update(msg):
+
     global goal_loc
     goal_loc[0] = msg.x
+    print("test")
     goal_loc[1] = msg.y
 def obj_update(msg):
     global obj_loc 
+    print("test2")
     obj_loc[0] = msg.x
     obj_loc[1] = msg.y
 def newOdom(msg):
