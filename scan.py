@@ -12,6 +12,7 @@ def locations(msg):
     min_ang = msg.angle_min
     ang_inc = msg.angle_increment
     publishing_msg = Point()
+    sensor_pubmsg=Point()
 
     for i in range(len(dists)):
         if dists[i] == 'inf':
@@ -26,25 +27,29 @@ def locations(msg):
     obj_loc = [obj_x, obj_y] 
     #obj_loc should have the x, y coordinates of the object with respect to the lidar
     #may not need goal_loc if we use the joystick to control the goal
-    # n = 0 
-    # goal = [[0,0,[0,0]]]
-    # while n < 2: #going to find 2 max distances to use as goal posts
-    #     dist = max(dists)
-    #     ind = dists.index(dist)
-    #     angle = min_ang + ang_inc*ind
-    #     x = dist*math.cos(angle)
-    #     y = dist*math.sin(angle)
-    #     dists[ind] = 0
-    #     goal[n] = [x,y]
-    #     n = n+1
-    # x_s = (goal[0][0]+goal[1][0])/2
-    # y_s = (goal[0][1]+goal[1][1])/2
-    # goal_loc = [x_s,y_s]
+    n = 0 
+    goal = [[0,0,[0,0]]]
+    while n < 2: #going to find 2 max distances to use as goal posts
+        dist = max(dists)
+        ind = dists.index(dist)
+        angle = min_ang + ang_inc*ind
+        x = dist*math.cos(angle)
+        y = dist*math.sin(angle)
+        dists[ind] = 0
+        goal[n] = [x,y]
+        n = n+1
+    x_s = (goal[0][0]+goal[1][0])/2
+    y_s = (goal[0][1]+goal[1][1])/2
+    goal_loc = [x_s,y_s]
     publishing_msg.x=obj_x
     publishing_msg.y=obj_y
     publishing_msg.z = 0
+    sensor_pubmsg.x=x_s
+    sensor_pubmsg.y=y_s
+    sensor_pubmsg.z=0
     if not rospy.is_shutdown():
         pub.publish(publishing_msg)
+        pub2.publish(sensor_pubmsg)
 
     #goal_loc should have the average of the 2 furthest distance readings
 
@@ -52,8 +57,9 @@ if __name__ == '__main__':
     rospy.init_node('scan_values')
 
     rate = rospy.Rate(5)  # ROS Rate at 5Hz
-    sub = rospy.Subscriber('/kobuki/laser/scan',LaserScan, locations)
-    pub = rospy.Publisher('lidar_topic', Point, queue_size=10)
+    sub = rospy.Subscriber('/front/scan',LaserScan, locations)
+    pub = rospy.Publisher('lidar_topic_obj', Point, queue_size=10)
+    pub2 = rospy.Publisher('lidar_topic_goal', Point, queue_size=10)
     #don't want to mess up his algorithm and don't know how to use the global variables to do this publishing
     
     while not rospy.is_shutdown():
