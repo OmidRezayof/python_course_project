@@ -5,7 +5,7 @@ import copy
 from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Point
 
-obj_loc = [0, 20]
+obj_loc = [0, 35]
 goal_loc = [0, 200]
 LTS_pointing = [0, 0]
 obj_pointing=[0,0]
@@ -33,7 +33,7 @@ def spot_loc_update(data):
 def pos_process():
     publishing_msg = Point()
     global obj_loc, goal_loc, LTS_pointing,obj_pointing
-    object_vel = 0.5  # a number between 0-1
+    object_vel = 3  # a number between 0-1
 
     if(LTS_pointing==[0,0]):
         if(((obj_loc[0] - goal_loc[0])**2+(obj_loc[1] - goal_loc[1])**2)**0.5<5):
