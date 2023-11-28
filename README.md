@@ -129,7 +129,7 @@ You will also need the following python modules to be installed to your python3 
 
    `$ source /opt/ros/noetic/setup.bash`
    
-   `$ cd ~/catkin_ws/src/your_pkg/src
+   `$ cd ~/catkin_ws/src/your_pkg/src`
    
    `$ python3 scan1.py & python3 husky_to_goal.py`
 
