@@ -50,7 +50,7 @@ For Gazebo simulation, please download our world file (.world) and place it in t
 `/opt/ros/noetic/share/husky_gazebo/worlds`
 directory. 
 
-    _Note that depending on your user permissions, you may need to `sudo cp ~/Downloads/new_world_2.world ~/opt/ros/noetic/share/husky_gazebo/worlds' in order to copy the file into a protected space_
+_Note that depending on your user permissions, you may need to `sudo cp ~/Downloads/new_world_2.world ~/opt/ros/noetic/share/husky_gazebo/worlds' in order to copy the file into a protected space_
 
 Create a catkin workspace, and a desired package (for looking into how to create catkin workspace and packages look at: 
 `http://wiki.ros.org/catkin/Tutorials/create_a_workspace` & `http://wiki.ros.org/ROS/Tutorials/CreatingPackage`)
