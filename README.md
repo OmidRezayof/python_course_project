@@ -67,9 +67,9 @@ You will also need the following python modules to be installed to your python3 
 
    `$ source /opt/ros/noetic/setup.bash`
 
-   `$ git clone https://github.com/OmidRezayof/python_course_project ~/catkin_ws/src/your_pkg/src`
+   `$ git clone https://github.com/OmidRezayof/python_course_project.git ~/catkin_ws/src/your_pkg/src`
    
-   or alternatively download all the .py files and place them into the src folder inside your custom package.
+   _or alternatively download all the .py files and place them into the src folder inside your custom package._
 
 7. Return to the catkin workspace directory and run the catkin make function. This compiles the package.
 
