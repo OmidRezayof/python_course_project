@@ -81,17 +81,23 @@ if __name__ == '__main__':
         print(called)
         if called==2:
             
-            goal_x = goal_loc[0] - obj_loc[0]
-            goal_y = goal_loc[1] - obj_loc[1]
-            goal_phi = tan(goal_x/goal_y)
-            goal_l = sqrt(goal_x**2 + goal_y**2) + 7
+            go_x = obj_loc[0] - goal_loc[0]
+            go_y = obj_loc[1] - goal_loc[1]
+            temp = ((go_x)**2+(go_y)**2)**0.5
+            if(temp!=0):
+                go_x=go_x/temp
+                go_y=go_y/temp
+            #goal_phi = tan(goal_x/goal_y)
+            #goal_l = sqrt(goal_x**2 + goal_y**2) + 7
             #print('x_l',x_l)
             #print(x_theta)
+            go_x = go_x*10
+            go_y = go_y*10
 
-            x = Point()
+            ex = Point()
             
-            x.x = goal_loc[0] + goal_l*sin(goal_phi)
-            x.y = goal_loc[1] + goal_l*cos(goal_phi)
+            ex.x = obj_loc[0] + go_x
+            ex.y = obj_loc[1] + go_y
             #print(goal.x)
             #print(goal.x)
             
@@ -99,18 +105,19 @@ if __name__ == '__main__':
             called=3
          
         elif called == 3:
-            inc_y = x.x -x
+            inc_x = ex.x -x
             #print(inc_x)
             #print(inc_x)
         #print(x)
         #print('x', x)
             #print(goal.x)
-            inc_x = x.y -y
+            inc_y = ex.y -y
         #print('y', y)
         #print(inc_y)
-            angle_of_goal = atan2(inc_x, inc_y)
+            angle_to_goal = atan2(inc_x, inc_y)
+            #angle_to_goal = atan2(ex.x, ex.y)
             #print('angle_to_goal', angle_to_goal)
-            angle_to_goal = 270 + angle_of_goal
+            
             #print('theta', theta)
         #print(angle_to_goal)
             if inc_x < 0.5 and inc_y < 0.5:
@@ -131,4 +138,3 @@ if __name__ == '__main__':
 
         pub.publish(speed)
         r.sleep()   
-   
