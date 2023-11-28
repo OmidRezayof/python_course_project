@@ -8,7 +8,7 @@ This is a repository for our group project on python programming course.
 Group: G11 / members: 
 Juliana Iverson , Austin Uresti , Omid Rezayof
 
-_Direct questions on to - austinu@utexas.edu / omid.rezayof@utexas.edu / jiverson@utexas.edu_
+_Direct questions to - austinu@utexas.edu / omid.rezayof@utexas.edu / jiverson@utexas.edu_
 
 
 ## Package Prequisites
