@@ -7,19 +7,13 @@ import sys
 # Initialize Pygame
 pygame.init()
 
-
-num_of_sheeps=0
-goal_vel=1
-obj_vel=1
-
-
 # Pygame window dimensions
 WINDOW_WIDTH = 600
 WINDOW_HEIGHT = 400
 FPS = 60
 
 # Colors
-WHITE = (255, 255, 255)
+WHITE = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
@@ -74,9 +68,9 @@ while not rospy.is_shutdown():
     screen.fill(WHITE)
 
     # Draw points if they are received from ROS topics
-    pygame.draw.circle(screen, RED, (WINDOW_WIDTH/2+int(spot_loc[0]), WINDOW_HEIGHT/2-int(spot_loc[1])), 2)
-    pygame.draw.circle(screen, GREEN, (WINDOW_WIDTH/2+int(goal_loc[0]), WINDOW_HEIGHT/2-int(goal_loc[1])), 2)
-    pygame.draw.circle(screen, BLUE, (WINDOW_WIDTH/2+int(obj_loc[0]), WINDOW_HEIGHT/2-int(obj_loc[1])), 2)
+    pygame.draw.circle(screen, RED, (WINDOW_WIDTH/2+int(spot_loc[0]), 100+WINDOW_HEIGHT/2-int(spot_loc[1])), 7)
+    pygame.draw.circle(screen, GREEN, (WINDOW_WIDTH/2+int(goal_loc[0]), 100+WINDOW_HEIGHT/2-int(goal_loc[1])), 7)
+    pygame.draw.circle(screen, BLUE, (WINDOW_WIDTH/2+int(obj_loc[0]), 100+WINDOW_HEIGHT/2-int(obj_loc[1])), 7)
 
     # Update the display
     pygame.display.flip()
