@@ -4,6 +4,7 @@ import rospy
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Point
 from numpy import array,inf
+import numpy as np
 
 def locations(msg):
     #whatever
@@ -15,15 +16,16 @@ def locations(msg):
     publishing_msg = Point()
     sensor_pubmsg=Point()
 
-    #for i in range(len(dists)):
+    for i in range(len(dists)):
     
-        #if dists[i] == inf or dists[i] == -inf:
-            #dists[i] = 0 
+        if dists[i] == inf or dists[i] == -inf:
+            dists[i] = 0 
             
     #need to get rid of the inf values to be able to process data
-    
-    #obj_dist = min(value for value in dists if value != 0)
-    obj_dist = min(value for value in dists)
+    if(dists==list(np.zeros(len(dists)))):
+        obj_dist = 0
+    else:
+        obj_dist = min(value for value in dists if value != 0)
     obj_ind = dists.index(obj_dist)
     obj_ang = min_ang + ang_inc*obj_ind  #should be object angle in radians
     obj_x = obj_dist*math.cos(obj_ang)
