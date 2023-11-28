@@ -28,7 +28,7 @@ start by creating a catkin workspace, and a desired package (for looking into ho
 
 then pull our repository our download all the .py files into the src folder inside your custom package)
 
-important step: **run `source /opt/ros/noetic/setup.bash` on any new terminal page you open before doing anything else**
+**IMPORTANT: run `source /opt/ros/noetic/setup.bash` on any new terminal page you open before doing anything else**
 
 ### Pygame Visualization
 
