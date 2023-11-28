@@ -8,10 +8,13 @@ from math import tan
 from math import sin
 from math import cos
 from math import sqrt
+import time
 
 flag = 0
 flag2=0
 flag3=0
+flag4 = 0
+flag5 = 0
 init_x = 0.0
 init_y = 0.0 
 init_theta = 0.0
@@ -20,7 +23,7 @@ y = 0
 theta = 0
 goal_loc=[0,0]
 obj_loc = [0,0]
-called=0
+called=2
 update = 0
 #need to write another script to get the initial odometry and theta only once then
 #subtract those values from the newOdom updating x and y 
@@ -30,20 +33,22 @@ def goal_update(msg):
     global flag2
     if flag2 == 0:
         goal_loc[0] = msg.x
-        print("test")
+        #print("test")
         goal_loc[1] = msg.y
         flag2 = 1
-        called = called + 1
+        update = update + 1
 def obj_update(msg):
     global obj_loc ,called, update
     global flag3
     if flag3 == 0:
             
-        print("test2")
+        #print("test2")
         obj_loc[0] = msg.x
+        print(msg.x)
         obj_loc[1] = msg.y
+        print(msg.y)
         flag3 = 1
-        called = called + 1
+        update = update + 1
         #print(called)
 def newOdom(msg):
     global flag, init_x, init_y, init_theta, x, y, theta
@@ -78,7 +83,7 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         
         #print(called)
-        if flag2==1 and flag3 ==1 and called ==2:
+        if flag2==1 and flag3 ==1 and update ==2 and called == 2:
             
             go_x = obj_loc[0] - goal_loc[0]
             go_y = obj_loc[1] - goal_loc[1]
@@ -87,8 +92,8 @@ if __name__ == '__main__':
                 go_x=go_x/temp
                 go_y=go_y/temp
 
-            go_x = go_x*10
-            go_y = go_y*10
+            go_x = go_x*2
+            go_y = go_y*2
 
             ex = Point()
             
@@ -102,30 +107,57 @@ if __name__ == '__main__':
 
             inc_y = ex.y -y
 
-            angle_to_goal = atan2(inc_x, inc_y)
+            angle_to_goal = atan2(inc_y, inc_x)
 
-            if inc_x < 0.5 and inc_y < 0.5:
+            if inc_x < 1 and inc_y < 1:
+                flag3 = 0
+                flag4 = 1
                 speed.linear.x = 0.0
                 speed.angular.z = 0.0
+             
                 called = 4
                 #break
             elif abs(angle_to_goal - theta) > 0.5:
                 speed.linear.x = 0.0
                 speed.angular.z = 1.0
-                print(speed.angular.z)
             else:
-                speed.linear.x = 1.0
-                speed.angular.z = 0.0
+                if flag4 ==0:
+                    speed.linear.x = 1.0
+                    speed.angular.z = 0.0
+                elif flag4 ==1:
+                    speed.linear.x = 0.0
+                    speed.angular.z = 0.0  
+                    flag3 = 0  
+                    flag4 = 2           
+              
                 
         if called == 4:
+            print(called)
+            flag3 =0
             
-            flag3 = 0
-            angle_to_obj = atan2(obj_loc[0],obj_loc[1])
-            flag = 0
-            if abs(angle_to_obj - theta) > 0.5:
+            time.sleep(0.5)
+            if flag5 == 0:
+                flag = 0
+            else:
+                flag = 1
+            #speed.linear.x = 0.0
+            #speed.angular.z = 0.0
+            if flag5 ==0:
+                angle_to_obj = atan2(obj_loc[1],obj_loc[0])
+                #angle_to_obj = -angle_to_obj 
+                flag5 = 1
+            
+            print('obj_loc', obj_loc)
+            print('angle_to_obj', angle_to_obj)
+            #time.sleep(1)
+            #speed.linear.x = 0.0
+            
+            print('theta',theta)
+            #print(angle_to_obj)
+            if abs(angle_to_obj - theta) > 0.2:
                 speed.linear.x = 0.0
-                speed.angular.z = 1.0
-            elif abs(angle_to_obj - theta) <= 0.5:
+                speed.angular.z = 0.5
+            elif abs(angle_to_obj - theta) <= 0.2:
                 speed.linear.x = 1.0
                 speed.angular.z = 0.0
                 called = 5
@@ -133,6 +165,7 @@ if __name__ == '__main__':
         if called == 5:
             flag3 = 0
             angle_to_obj = atan2(obj_loc[0],obj_loc[1])
+            
             #flag = 0
             if abs(angle_to_obj) <= 0.5:
                 flag3 = 0
@@ -145,4 +178,4 @@ if __name__ == '__main__':
                 called = 2
             
         pub.publish(speed)
-        r.sleep()   
+        r.sleep()  
