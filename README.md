@@ -55,7 +55,11 @@ _Note that depending on your user permissions, you may need to `sudo cp ~/Downlo
 Create a catkin workspace, and a desired package (for looking into how to create catkin workspace and packages look at: 
 `http://wiki.ros.org/catkin/Tutorials/create_a_workspace` & `http://wiki.ros.org/ROS/Tutorials/CreatingPackage`)
 
-Then pull our repository (`git clone [our url copied from above] /your/destination/folder`) our download all the .py files into the src folder inside your custom package
+Then pull our repository (`git clone [our url copied from above] /your/destination/folder`) or download all the .py files and place all the .py files into the src folder inside your custom package. After that, cd to your catkin_work_space and run
+
+`catkin_make`
+
+to make sure your package is ready to use.
 
 
 ### Pygame Visualization
