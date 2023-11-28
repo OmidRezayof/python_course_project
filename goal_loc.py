@@ -24,7 +24,7 @@ def position(data):
         RTS_pointing[1] /= temp
 
     publishing_msg = Point()
-    goal_vel = 1
+    goal_vel = 0.5
 
     goal_loc[0] += RTS_pointing[0] * goal_vel
     goal_loc[1] += RTS_pointing[1] * goal_vel
