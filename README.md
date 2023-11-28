@@ -80,13 +80,19 @@ You can use the right thumbstick to move the goal and the left thumbstick to giv
 ### Gazebo Visualization
 
 #### Starting Simulation
+
 Open a new terminal window and run:
+
 `source /opt/ros/noetic/setup.bash`
+
 `export HUSKY_LMS1XX_ENABLED=1`
+
 `roslaunch husky_gazebo husky_newworld.launch`
 
 #### Viewing LiDAR & other Robot Vitals
+
 `source /opt/ros/noetic/setup.bash`
+
 `roslaunch husky_viz view_robot.launch`
 
 #### Launching Python Code
