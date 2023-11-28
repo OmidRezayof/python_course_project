@@ -60,6 +60,10 @@ You will also need the following python modules to be installed to your python3 
 
    `$ catkin_create_pkg your_pkg std_msgs rospy geometry_msgs`
 
+   `$ cd ..`
+
+   `$ catkin_make`
+
    (For more details on creating a workspace, see the following links: 
    http://wiki.ros.org/catkin/Tutorials/create_a_workspace & http://wiki.ros.org/ROS/Tutorials/CreatingPackage)
 
