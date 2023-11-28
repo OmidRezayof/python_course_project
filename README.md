@@ -6,7 +6,9 @@ Repo for course project
 This is a repository for our group project on python programming course. 
 Group: G11 / members: Juliana Iverson, Austin Uresti, Omid Rezayof
 
+## Quick tip on installing gazebo / husky
 
+%% BY AUSTIN %%
 
 
 ## How To Run
@@ -48,6 +50,31 @@ On a new terminal, create a directory for our project and pull our repository. A
 `python3 goal_loc & python3 dog_loc & python3 obj_loc & python3 pygame_node`
 
 You can use the right thumbstick to move the goal and the left thumbstick to give disturbances to the object. 
+
+### Gazebo Visualization
+
+
+Open a new terminal window and run:
+
+`roslaunch husky_gazebo husky_playpen.launch`
+
+To run the simulation with a joystick, open a new terminal and run:
+
+`rosrun joy joy_node`
+
+%%% BY AUSTIN%%%
+
+To run the "husky_to_x.py", first cd to your_package/src and then run:
+`python3 scan.py & python3 husky_to_x.py`
+
+To run the moving cylinder simulation, after opening gazebo, cd to your package's src directory and run:
+
+`python3 comnew.py`
+
+and on a new terminal page, publish a message like this:
+
+`rostopic pub -r 10 /cylinder_velocity geometry_msgs/Twist  '{linear:  {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'`
+
 
 This is the link to our presentation, you can find more information on how you can control and play with this objects:
 
