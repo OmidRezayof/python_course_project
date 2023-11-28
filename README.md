@@ -5,11 +5,14 @@ Repo for course project
 
 This is a repository for our group project on python programming course. 
 
-Group: G11 / members: Juliana Iverson, Austin Uresti, Omid Rezayof
+Group: G11 / members: 
+Juliana Iverson , Austin Uresti , Omid Rezayof
+
+_Direct questions on to - austinu@utexas.edu / omid.rezayof@utexas.edu / jiverson@utexas.edu_
+
 
 ## Package Prequisites
 
-_Direct questions on this section to Austin Uresti - austinu@utexas.edu_
 
 Our project depends on several external packages in order to work.
 
