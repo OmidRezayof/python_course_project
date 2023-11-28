@@ -1,18 +1,9 @@
-# python_course_project
-ROSstress4less
-
-Repo for course project
-
-This is a repository for our group project on python programming course. 
-
-Group: G11 / members: 
-Juliana Iverson , Austin Uresti , Omid Rezayof
-
-_Direct questions to - austinu@utexas.edu / omid.rezayof@utexas.edu / jiverson@utexas.edu_
-
+# M E 396 P - Application Programming for Engineers
+# Object Herding Simulation
+## Group G11: Juliana Iverson , Austin Uresti , Omid Rezayof
+_jiverson@utexas.edu / austinu@utexas.edu / omid.rezayof@utexas.edu_
 
 ## Package Prequisites
-
 
 Our project depends on several external packages in order to work.
 
@@ -39,27 +30,44 @@ Package 5: [Catkin](http://wiki.ros.org/catkin#Installing_catkin)
 Package 6: [ROS Joy](http://wiki.ros.org/joy/Tutorials/ConfiguringALinuxJoystick)
 ## How To Run
 
-**IMPORTANT: run `source /opt/ros/noetic/setup.bash` on any new terminal page you open before doing anything else**
+**IMPORTANT: run `source /opt/ros/noetic/setup.bash` on any new terminal page you open before doing anything else
+**
 
 You will also need the following python modules to be installed to your python3 installation:
 
 [Pygame](https://www.pygame.org/wiki/GettingStarted)
 [numpy](https://numpy.org/install/)
 
-For Gazebo simulation, please download our world file (.world) and place it in the 
-`/opt/ros/noetic/share/husky_gazebo/worlds`
-directory. 
+1. For Gazebo simulation, please download our world file (_new_world2.world_) and place it in the 
+`/opt/ros/noetic/share/husky_gazebo/worlds` directory. 
+   _Note that depending on your user permissions, you may need to execute a sudo copy function in order to copy the file into a protected space_
 
-_Note that depending on your user permissions, you may need to `sudo cp ~/Downloads/new_world_2.world ~/opt/ros/noetic/share/husky_gazebo/worlds' in order to copy the file into a protected space_
+   `$ sudo cp ~/Downloads/new_world_2.world ~/opt/ros/noetic/share/husky_gazebo/worlds` _
 
-Create a catkin workspace, and a desired package (for looking into how to create catkin workspace and packages look at: 
-`http://wiki.ros.org/catkin/Tutorials/create_a_workspace` & `http://wiki.ros.org/ROS/Tutorials/CreatingPackage`)
+2. Create a catkin workspace, change to the catkin workspace directory, and create your containing package. 
 
-Then pull our repository (`git clone [our url copied from above] /your/destination/folder`) or download all the .py files and place all the .py files into the src folder inside your custom package. After that, cd to your catkin_work_space and run
+   `$ mkdir -p ~/catkin_ws/src`
 
-`catkin_make`
+   `$ cd ~/catkin_ws/src`
 
-to make sure your package is ready to use.
+   `$ catkin_create_pkg your_package std_msgs rospy geometry_msgs`
+
+(For more details on creating a workspace, see the following links: 
+http://wiki.ros.org/catkin/Tutorials/create_a_workspace & http://wiki.ros.org/ROS/Tutorials/CreatingPackage)
+
+5. Clone our repository to your local machine
+
+   `$ git clone https://github.com/OmidRezayof/python_course_project ~/catkin_ws/src/your_package/src`
+   
+   or alternatively download all the .py files and place them into the src folder inside your custom package.
+
+7. Return to the catkin workspace directory and run the catkin make function. This compiles the package.
+
+   `$ cd ~/catkin_ws/src`
+
+   `$ catkin_make`
+
+8. Your package should now be ready for use.
 
 
 ### Pygame Visualization
