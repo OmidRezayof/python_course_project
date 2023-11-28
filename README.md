@@ -1,7 +1,7 @@
-# M E 396 P - Application Programming for Engineers
+# M E 396 P - Application Programming for Engineers - Fall 2023
 # Object Herding Simulation
-## Group G11: Juliana Iverson , Austin Uresti , Omid Rezayof
-_jiverson@utexas.edu / austinu@utexas.edu / omid.rezayof@utexas.edu_
+## Group G11: Juliana Iverson , Omid Rezayof, Austin Uresti
+_jiverson@utexas.edu / omid.rezayof@utexas.edu / austinu@utexas.edu_
 
 ## Package Prequisites
 
@@ -28,36 +28,46 @@ Package 4: [ClearPath Robotics Husky Desktop & Husky Simulator](https://www.clea
 Package 5: [Catkin](http://wiki.ros.org/catkin#Installing_catkin)
 
 Package 6: [ROS Joy](http://wiki.ros.org/joy/Tutorials/ConfiguringALinuxJoystick)
-## How To Run
 
-**IMPORTANT: run `source /opt/ros/noetic/setup.bash` on any new terminal page you open before doing anything else
-**
+## Part I: Package Setup
+
+**IMPORTANT: run `$ source /opt/ros/noetic/setup.bash` on any new terminal page you open before doing anything else**
 
 You will also need the following python modules to be installed to your python3 installation:
 
 [Pygame](https://www.pygame.org/wiki/GettingStarted)
+
 [numpy](https://numpy.org/install/)
 
-1. For Gazebo simulation, please download our world file (_new_world2.world_) and place it in the 
-`/opt/ros/noetic/share/husky_gazebo/worlds` directory. 
+1. For Gazebo simulation, please download our world and launch files (_new_world_2.world, husky_newworld2.launch, newworld2.launch_) and place it in the 
+`/opt/ros/noetic/share/husky_gazebo/worlds` and the `/opt/ros/noetic/share/husky_gazebo/launch` directory. 
+
    _Note that depending on your user permissions, you may need to execute a sudo copy function in order to copy the file into a protected space_
 
-   `$ sudo cp ~/Downloads/new_world_2.world ~/opt/ros/noetic/share/husky_gazebo/worlds` _
+   `$ sudo cp ~/Downloads/new_world_2.world ~/opt/ros/noetic/share/husky_gazebo/worlds`
 
-2. Create a catkin workspace, change to the catkin workspace directory, and create your containing package. 
+   `$ sudo cp ~/Downloads/husky_newworld2.launch ~/opt/ros/noetic/share/husky_gazebo/launch`
+
+   `$ sudo cp ~/Downloads/newworld2.launch ~/opt/ros/noetic/share/husky_gazebo/launch`
+
+3. Open a new terminal window, create a catkin workspace, change to the catkin workspace directory, and create your containing package. 
+
+   `$ source /opt/ros/noetic/setup.bash`
 
    `$ mkdir -p ~/catkin_ws/src`
 
    `$ cd ~/catkin_ws/src`
 
-   `$ catkin_create_pkg your_package std_msgs rospy geometry_msgs`
+   `$ catkin_create_pkg your_pkg std_msgs rospy geometry_msgs`
 
-(For more details on creating a workspace, see the following links: 
-http://wiki.ros.org/catkin/Tutorials/create_a_workspace & http://wiki.ros.org/ROS/Tutorials/CreatingPackage)
+   (For more details on creating a workspace, see the following links: 
+   http://wiki.ros.org/catkin/Tutorials/create_a_workspace & http://wiki.ros.org/ROS/Tutorials/CreatingPackage)
 
-5. Clone our repository to your local machine
+5. Open a new terminal window and clone our repository to your local machine
 
-   `$ git clone https://github.com/OmidRezayof/python_course_project ~/catkin_ws/src/your_package/src`
+   `$ source /opt/ros/noetic/setup.bash`
+
+   `$ git clone https://github.com/OmidRezayof/python_course_project ~/catkin_ws/src/your_pkg/src`
    
    or alternatively download all the .py files and place them into the src folder inside your custom package.
 
@@ -69,60 +79,100 @@ http://wiki.ros.org/catkin/Tutorials/create_a_workspace & http://wiki.ros.org/RO
 
 8. Your package should now be ready for use.
 
+## Part II: Visualization
 
 ### Pygame Visualization
 
+1. First start with initiating roscore. In a new terminal page type:
 
-First start with running roscore. In a new terminal page type:
+   `$ source /opt/ros/noetic/setup.bash`
+   
+   `$ roscore`
 
-`roscore`
+2. Open another new terminal _(shortcut: Ctrl + Alt + T)_ and start:
 
-On a new terminal page type:
+   `$ source /opt/ros/noetic/setup.bash`
 
-`rosrun joy joy_node`
+   `$ rosrun joy joy_node`
 
-This will run the joy_node node which is for communicating with Xbox controller. 
+   This will run the joy_node node which is for communicating with the controller. 
 
-On a new terminal, create a directory for our project and pull our repository. After that, cd to the directory and run:
+4. Open another new terminal, create a directory for our project and pull our repository. After that, cd to the directory and run:
 
-`python3 goal_loc & python3 dog_loc & python3 obj_loc & python3 pygame_node`
+   `$ source /opt/ros/noetic/setup.bash`
+   
+   `$ python3 goal_loc & python3 dog_loc & python3 obj_loc & python3 pygame_node`
 
-You can use the right thumbstick to move the goal and the left thumbstick to give disturbances to the object. 
+   You can use the right thumbstick to move the goal and the left thumbstick to give disturbances to the object. 
 
 ### Gazebo Visualization
 
-#### Starting Simulation
+1. Open a new terminal window and run:
 
-Open a new terminal window and run:
+   `$ source /opt/ros/noetic/setup.bash`
 
-`source /opt/ros/noetic/setup.bash`
+   `$ export HUSKY_LMS1XX_ENABLED=1`
 
-`export HUSKY_LMS1XX_ENABLED=1`
-
-`roslaunch husky_gazebo husky_newworld.launch`
+   `$ roslaunch husky_gazebo husky_newworld2.launch`
 
 #### Viewing LiDAR & other Robot Vitals
 
-`source /opt/ros/noetic/setup.bash`
+1. Open a new terminal window and run:
+   
+   `$ source /opt/ros/noetic/setup.bash`
 
-`roslaunch husky_viz view_robot.launch`
+   `$ roslaunch husky_viz view_robot.launch`
 
-#### Launching Python Code
+#### Launching Husky to Goal
 
-To run the "husky_to_x.py", first cd to your_package/src and then run:
+1. To run the Husky to Goal algorithm, open a new terminal, cd to your_pkg/src and then run scan1.py and husky_to_goal.py:
 
-`python3 scan.py & python3 husky_to_x.py`
+   `$ source /opt/ros/noetic/setup.bash`
+   
+   `$ cd ~/catkin_ws/src/your_pkg/src
+   
+   `$ python3 scan1.py & python3 husky_to_goal.py`
 
-To run the moving cylinder simulation, after opening gazebo, cd to your package's src directory and run:
+2. Return to the Gazebo window to view the results
 
-`python3 comnew.py`
+#### Launching Moving Cylinder Simulation
 
-and on a new terminal page, publish a message like this in order to move the cylinder:
+1. To run the moving cylinder simulation, after opening gazebo, cd to your package's src directory and run comnew.py:
 
-`rostopic pub -r 10 /cylinder_velocity geometry_msgs/Twist  '{linear:  {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'`
+   `$ source /opt/ros/noetic/setup.bash`
+   
+   `$ cd ~/catkin_ws/src/your_pkg/src
 
+   `$ python3 comnew.py`
+
+2. On a new terminal page, publish a message like this in order to move the cylinder:
+
+   `$ rostopic pub -r 10 /cylinder_velocity geometry_msgs/Twist  '{linear:  {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'`
+
+3. Return to the Gazebo window to view the results
+
+### Presentation Link
 
 This is the link to our presentation, you can find more information on how you can control and play with this objects:
 
 https://docs.google.com/presentation/d/17h3HP_62Bj14_MxYqViFvrI0khu8-iKaYJdJY8pVOmc/edit?usp=sharing
+
+### Resources Used
+
+http://wiki.ros.org/noetic
+
+https://classic.gazebosim.org/
+
+http://www.clearpathrobotics.com/assets/guides/noetic/ros/Drive%20a%20Husky.html#
+
+https://classic.gazebosim.org/tutorials?tut=plugins_model
+
+https://www.clearpathrobotics.com/assets/guides/noetic/ros/Creating%20publisher.html
+
+https://www.clearpathrobotics.com/assets/guides/kinetic/husky/CustomizeHuskyConfig.html
+
+http://wiki.ros.org/catkin
+
+http://wiki.ros.org/joy/Tutorials/ConfiguringALinuxJoystick
+
 
